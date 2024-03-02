@@ -1,0 +1,40 @@
+<header id="main-header">
+  <div id="logo">
+    <a href="/">MyBlog</a>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a href="/posts">All Posts</a>
+      </li>
+      <li>
+        <a href="/new-post">Create Post</a>
+      </li>
+      <% if (!user) { %>
+        <li>
+          <a href="/login">Login</a>
+        </li>
+      <% } %>
+    <li>
+      <a href="/joke">Random Jokes</a>
+    </li>
+    <li>
+      <a href="/fact">Random Facts</a>
+    </li>
+    <li>
+      <a href="/exchange">Currency Exchange</a>
+    </li>
+    <% if (user.role==="Admin") { %>
+      <li>
+        <a href="/admin">Admin page</a>
+      </li>
+    <%} %>
+    <% if (user) { %>
+      <li>
+        <a href="/logout">Logout</a>
+      </li>
+    <% } %>
+
+    </ul>
+  </nav>
+</header>

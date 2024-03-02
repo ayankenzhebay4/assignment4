@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .data {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .data p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .data strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .data span {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .update-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .update-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="/posts" class="back-btn">Back to posts</a>
+    <div class="container">
+        <h1>Interesting Fact</h1>
+        <div class="data">
+            <p><strong>Fact:</strong> <span id="text"></span></p>
+            <p><strong>Year:</strong> <span id="year"></span></p>
+        </div>
+        <button class="update-btn" onclick="fetchData()">Refresh</button>
+    </div>
+    <script>
+        const url = 'https://numbersapi.p.rapidapi.com/6/21/date?fragment=true&json=true';
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '1eaf3dd056mshcfb2c869ce12a2cp14c9dbjsn172e7c93eb75',
+                'X-RapidAPI-Host': 'numbersapi.p.rapidapi.com'
+            }
+        };
+
+        async function fetchData() {
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                document.getElementById('text').textContent = result.text;
+                document.getElementById('year').textContent = result.year;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

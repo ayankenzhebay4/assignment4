@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конвертер валют</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+    }
+
+    .container div {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    #result {
+        margin-top: 10px;
+        font-size: 24px;
+    }
+
+    .back-btn {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<a href="/posts" class="back-btn">Back to posts</a>
+
+<div class="container">
+    <div>
+        <label for="from">From (currency):</label>
+        <select id="from">
+            <option value="SGD">SGD</option>
+            <option value="MYR">MYR</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="AUD">AUD</option>
+            <option value="JPY">JPY</option>
+            <!-- Добавьте остальные валюты здесь -->
+        </select>
+    </div>
+    <div>
+        <label for="to">To (currency):</label>
+        <select id="to">
+            <option value="SGD">SGD</option>
+            <option value="MYR">MYR</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="AUD">AUD</option>
+            <option value="JPY">JPY</option>
+            <!-- Добавьте остальные валюты здесь -->
+        </select>
+    </div>
+    <div id="result"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+async function fetchExchangeRate() {
+    const from = document.getElementById('from').value;
+    const to = document.getElementById('to').value;
+
+    const options = {
+        method: 'GET',
+        url: 'https://currency-exchange.p.rapidapi.com/exchange',
+        params: {
+            from: from,
+            to: to,
+            q: '1.0'
+        },
+        headers: {
+            'X-RapidAPI-Key': '1eaf3dd056mshcfb2c869ce12a2cp14c9dbjsn172e7c93eb75',
+            'X-RapidAPI-Host': 'currency-exchange.p.rapidapi.com'
+        }
+    };
+
+    try {
+        const response = await axios.request(options);
+        document.getElementById('result').innerHTML = `Currency: 1 ${from} = ${response.data} ${to}`;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Вызываем функцию для получения курса при загрузке страницы
+fetchExchangeRate();
+
+document.getElementById('from').addEventListener('change', fetchExchangeRate);
+document.getElementById('to').addEventListener('change', fetchExchangeRate);
+</script>
+
+</body>
+</html>

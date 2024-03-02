@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chuck Norris Joke</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        text-align: center;
+    }
+    .joke-container {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px; /* Добавлено для увеличения отступа между шуткой и кнопкой */
+    }
+    h1 {
+        color: #333;
+        margin-top: 0;
+    }
+    .joke-text {
+        color: #555;
+        font-size: 1.2rem;
+        margin-top: 20px;
+    }
+    .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn:hover {
+        background-color: #45a049;
+    }
+    .back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    .back-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<a href="/posts" class="back-btn">Back to posts</a>
+
+<div class="container">
+    <div class="joke-container" id="jokeContainer">
+        <!-- Результаты будут отображены здесь -->
+    </div>
+    <button class="btn" onclick="fetchJoke()">get new joke</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+const options = {
+    method: 'GET',
+    url: 'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random',
+    headers: {
+        accept: 'application/json',
+        'X-RapidAPI-Key': '1eaf3dd056mshcfb2c869ce12a2cp14c9dbjsn172e7c93eb75',
+        'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com'
+    }
+};
+
+// Функция для отображения шутки на странице
+function displayJoke(joke) {
+    const jokeContainer = document.getElementById('jokeContainer');
+    const jokeText = document.createElement('div');
+    jokeText.classList.add('joke-text');
+    jokeText.textContent = joke;
+    jokeContainer.appendChild(jokeText);
+}
+
+async function fetchJoke() {
+    try {
+        // Очищаем предыдущую шутку перед загрузкой новой
+        const jokeContainer = document.getElementById('jokeContainer');
+        jokeContainer.innerHTML = '';
+
+        const response = await axios.request(options);
+        console.log(response.data);
+
+        // Выводим полученную шутку на страницу
+        displayJoke(response.data.value);
+    } catch (error) {
+        console.error(error);
+    }
+}
+</script>
+
+</body>
+</html>
